@@ -20,6 +20,7 @@ class LiquidSwipe extends StatefulWidget {
   final int initialPage;
   final bool enableSlideIcon;
   final Widget slideIconWidget;
+  final StreamController<SlideUpdate> streamController;
   final double positionSlideIcon;
   final bool enableLoop;
   final WaveType waveType;
@@ -32,6 +33,7 @@ class LiquidSwipe extends StatefulWidget {
     @required this.pages,
     this.fullTransitionValue = FULL_TARNSITION_PX,
     this.initialPage = 0,
+    this.streamController,
     this.enableSlideIcon = false,
     this.slideIconWidget = const Icon(Icons.arrow_back_ios),
     this.positionSlideIcon = 0.54,
@@ -91,7 +93,7 @@ class _LiquidSwipe extends State<LiquidSwipe> with TickerProviderStateMixin {
     activePageIndex = widget.initialPage;
     nextPageIndex = widget.initialPage;
     //Stream Controller initialization
-    slideUpdateStream = StreamController<SlideUpdate>();
+    slideUpdateStream = widget.streamController ?? StreamController<SlideUpdate>();
     //listening to updates of stream controller
     slideUpdateStream$ = slideUpdateStream.stream.listen((SlideUpdate event) {
       setState(() {
